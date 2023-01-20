@@ -1,14 +1,15 @@
 'use strict';
 
 var sinon  = require('sinon'),
-    AWS    = require('aws-sdk'),
+    { DynamoDB } = require('@aws-sdk/client-dynamodb'),
+    { DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb'),
     Table  = require('../lib/table'),
     _      = require('lodash'),
     bunyan = require('bunyan');
 
 exports.mockDynamoDB = function () {
   var opts = { endpoint : 'http://localhost:8000', region: 'us-west-2', apiVersion: '2012-08-10' };
-  var db = new AWS.DynamoDB(opts);
+  var db = new DynamoDB(opts);
 
   db.scan          = sinon.stub();
   db.putItem       = sinon.stub();
@@ -27,12 +28,12 @@ exports.mockDynamoDB = function () {
 };
 
 exports.realDynamoDB = function () {
-  var opts = { endpoint : 'http://localhost:8000', region: 'us-west-2', apiVersion: '2012-08-10' };
-  return new AWS.DynamoDB(opts);
+  var opts = { endpoint : 'http://localhost:4566', region: 'us-east-1', apiVersion: '2012-08-10' };
+  return new DynamoDB(opts);
 };
 
 exports.mockDocClient = function () {
-  var client = new AWS.DynamoDB.DocumentClient({service : exports.mockDynamoDB()});
+  var client = DynamoDBDocumentClient.from(exports.mockDynamoDB());
 
   var operations= [
     'batchGet',

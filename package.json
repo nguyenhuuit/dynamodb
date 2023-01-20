@@ -25,10 +25,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "joi": "^17.2.1",
+    "@aws-sdk/client-dynamodb": "^3.254.0",
+    "@aws-sdk/lib-dynamodb": "^3.254.0",
     "async": "^2.6.3",
     "aws-sdk": "^2.756.0",
     "bunyan": "^1.8.14",
+    "joi": "^17.2.1",
     "lodash": "^4.17.20",
     "stream-to-promise": "^2.2.0",
     "uuid": "^7.0.3"

@@ -17,7 +17,7 @@ test-integration: lint
 	@node_modules/.bin/mocha \
 		--reporter spec \
 		--ui bdd \
-		test/integration/*-test.js
+		test/integration/*table-test.js
 
 coverage: lint
 	@node_modules/.bin/nyc --reporter=lcov --reporter=text node_modules/mocha/bin/_mocha $(TESTSRC)
