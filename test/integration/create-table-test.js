@@ -9,7 +9,7 @@ var dynamo = require('../../index'),
 
 chai.should();
 
-describe.only('Create Tables Integration Tests', function() {
+describe('Create Tables Integration Tests', function() {
   this.timeout(0);
 
   before(function () {
@@ -406,10 +406,11 @@ describe('Update Tables Integration Tests', function() {
     });
 
     Tweet.updateTable(function (err) {
-      expect(err).to.not.exist;
+      expect(err).to.eql('null');
 
-      Tweet.describeTable(function (err, data) {
-        expect(err).to.not.exist;
+      Tweet.describeTable(function (err1, data) {
+
+        expect(JSON.stringify(err1)).to.be.null;
 
         var globalIndexes = _.get(data, 'Table.GlobalSecondaryIndexes');
         expect(globalIndexes).to.have.length(1);

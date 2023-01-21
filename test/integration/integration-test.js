@@ -37,7 +37,7 @@ internals.loadSeedData = function (callback) {
   function (callback) {
     async.times(15 * 5, function(n, next) {
       var userId = internals.userId( n %5);
-      var p = {UserId : userId, content: 'I love tweeting, in fact Ive tweeted ' + n + ' times', num : n};
+      var p = {UserId : userId, TweetID: uuidv4(), content: 'I love tweeting, in fact Ive tweeted ' + n + ' times', num : n};
       if(n %3 === 0 ) {
         p.tag = '#test';
       }
@@ -78,7 +78,7 @@ describe('DynamoDB Integration Tests', function() {
     const generateId = () => uuidv4();
     generateId.description = 'uuid.v4';
 
-    const now = () => Date.now();
+    const now = () => Date.now().toString();
     now.description = 'Date.now()';
 
     dynamo.dynamoDriver(helper.realDynamoDB());
@@ -159,7 +159,7 @@ describe('DynamoDB Integration Tests', function() {
     ], done);
   });
 
-  describe('#create', function () {
+  describe.only('#create', function () {
     it('should create item with hash key', function(done) {
       User.create({
         email : 'foo@bar.com',
@@ -212,7 +212,7 @@ describe('DynamoDB Integration Tests', function() {
         var item2 = _.merge(item, {id : acc.get('id')});
         User.create(item2, params, function (error, acc) {
           expect(error).to.exist;
-          expect(error.code).to.eql('ConditionalCheckFailedException');
+          expect(error.name).to.eql('ConditionalCheckFailedException');
           expect(acc).to.not.exist;
 
           return done();
@@ -233,7 +233,7 @@ describe('DynamoDB Integration Tests', function() {
         var item2 = _.merge(item, {id : acc.get('id')});
         User.create(item2, opts, function (error, acc) {
           expect(error).to.exist;
-          expect(error.code).to.eql('ConditionalCheckFailedException');
+          expect(error.name).to.eql('ConditionalCheckFailedException');
           expect(acc).to.not.exist;
 
           return done();
@@ -251,7 +251,7 @@ describe('DynamoDB Integration Tests', function() {
         var item2 = _.merge(item, {id : acc.get('id')});
         User.create(item2, {overwrite : false}, function (error, acc) {
           expect(error).to.exist;
-          expect(error.code).to.eql('ConditionalCheckFailedException');
+          expect(error.name).to.eql('ConditionalCheckFailedException');
           expect(acc).to.not.exist;
 
           return done();
