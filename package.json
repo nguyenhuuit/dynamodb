@@ -27,7 +27,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.254.0",
     "@aws-sdk/lib-dynamodb": "^3.254.0",
-    "async": "^2.6.3",
+    "async": "^3.0.0",
     "aws-sdk": "^2.756.0",
     "bunyan": "^1.8.14",
     "joi": "^17.2.1",
